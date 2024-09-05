@@ -1,13 +1,18 @@
+import lombok.RequiredArgsConstructor;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+// Use the @RequiredArgsConstructor annotation in the ShopService to generate a corresponding constructor.
+@RequiredArgsConstructor
 
 public class ShopService {
-    private ProductRepo productRepo = new ProductRepo();
-    private OrderRepo orderRepo = new OrderMapRepo();
+    private final ProductRepo productRepo;
+    private final OrderRepo orderRepo;
+
 
 //Modify the 'addOrder' method in the ShopService so that an exception is thrown if the product does not exist.
 //In the 'addOrder' method, fill this field with the current timestamp.
