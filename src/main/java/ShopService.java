@@ -14,11 +14,14 @@ public class ShopService {
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
-        for (String productId : productIds) {
-            Product productToOrder = productRepo.getProductById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
-            products.add(productToOrder);
-        }
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
 
+        for (String productId : productIds) {//"Führe eine Schleife aus durch die Liste productIds aus und suche nach einem String productID."
+            Product productToOrder = productRepo.getProductById(productId)//"Das Product productToOrder bezieht sich auf die productID die ich über die .getProductByID Methode aus dem productRepo hole."
+                    .orElseThrow(() -> new ProductNotFoundException(productId));//"Wenn die productId nicht vorhanden ist, wird die ProductNotFoundException geworfen."
+            products.add(productToOrder); //"Sonst füge das Product productToOrder der Liste products hinzu."
+        }
+//    Old addOrder method:
 //    public Order addOrder(List<String> productIds) {
 //        List<Product> products = new ArrayList<>();
 //        for (String productId : productIds) {
@@ -29,17 +32,14 @@ public class ShopService {
 //            }
 //            products.add(productToOrder);
 //        }
-
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
-
         return orderRepo.addOrder(newOrder);
     }
     // Write a method in the ShopService that returns a list of all orders with a specific order status (parameter) using streams.
 
-    public List<Order> getOrdersByStatus(OrderStatus status) {
-        return orderRepo.getOrders().stream()
-                .filter(order -> order.status() == status)
-                .collect(Collectors.toList());
+    public List<Order> getOrdersByStatus(OrderStatus status) { //"Erzeuge eine Liste über die Methode getOrdersByStatus mit dem Übergabeparameter status."
+        return orderRepo.getOrders().stream() //"Gib mir aus dem orderRepo mit Hilfe eines Streams die Orders aus."
+                .filter(order -> order.status() == status) //"Filter dir orders heraus die einen status haben.
+                .collect(Collectors.toList()); //"Gib dir diese Orders in einer Liste zurück.
     }
 
     //Add an 'updateOrder' method in the ShopService that updates the Order based on an orderId and a new order status. Use the Lombok @With annotation for this.
