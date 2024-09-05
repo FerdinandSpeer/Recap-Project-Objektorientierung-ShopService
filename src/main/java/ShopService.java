@@ -1,3 +1,4 @@
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ public class ShopService {
     private OrderRepo orderRepo = new OrderMapRepo();
 
 //Modify the 'addOrder' method in the ShopService so that an exception is thrown if the product does not exist.
+//In the 'addOrder' method, fill this field with the current timestamp.
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
@@ -28,12 +30,9 @@ public class ShopService {
 //            products.add(productToOrder);
 //        }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products);
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
 
         return orderRepo.addOrder(newOrder);
-
-       // Write a method in the ShopService that returns a list of all orders with a specific order status (parameter) using streams.
-
     }
     // Write a method in the ShopService that returns a list of all orders with a specific order status (parameter) using streams.
 

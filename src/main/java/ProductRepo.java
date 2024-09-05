@@ -1,20 +1,19 @@
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Getter
 public class ProductRepo {
-    private List<Product> products;
+    private final List<Product> products;
 
     public ProductRepo() {
         products = new ArrayList<>();
         products.add(new Product("1", "Apfel"));
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-//Modify the 'getProductById' method in your ProductRepo so that it returns an Optional if the product exists, otherwise an empty Optional.
+    //Modify the 'getProductById' method in your ProductRepo so that it returns an Optional if the product exists, otherwise an empty Optional.
     public Optional<Product> getProductById(String id) {
         for (Product product : products) {
             if (product.id().equals(id)) {
