@@ -19,7 +19,8 @@ public class ShopService {
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now()); //"Erstelle eine neue Order (newOrder) mit dem UUID.randomUUID und
+        // dem Status PROCESSING.
 
         for (String productId : productIds) {//"Führe eine Schleife aus durch die Liste productIds aus und suche nach einem String productID."
             Product productToOrder = productRepo.getProductById(productId)//"Das Product productToOrder bezieht sich auf die productID die ich über die .getProductByID Methode aus dem productRepo hole."
@@ -53,7 +54,7 @@ public class ShopService {
         Order orderToUpdate = Optional.ofNullable(orderRepo.getOrderById(orderId)).orElseThrow(() -> new OrderNotFoundException(orderId)); //"erstelle eine neue Order (orderToUpdate) indem
         // du ein Optional erstellst (leer oder befüllt = .ofNullable) das sich die Info über die orderId aus dem orderRepo holt. Sollte die orderId nicht vorhanden sein, wird die Exception
         // OrderNotFoundException geworfen. Sonst...
-        orderRepo.removeOrder(orderId);// ..."loesche die Order mit der Id orderId aus dem orderRepo und..."
+        orderRepo.removeOrder(orderId);// ..."lösche die Order mit der Id orderId aus dem orderRepo und..."
         orderRepo.addOrder(orderToUpdate.withStatus(newStatus));//"...erstelle eine neue Order (orderToUpdate) mit der Id orderId und dem neuen Status newStatus"
     }
 }

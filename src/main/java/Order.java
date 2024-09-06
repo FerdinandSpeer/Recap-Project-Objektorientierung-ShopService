@@ -14,7 +14,4 @@ public record Order(
         //Extend the Order object with a field that stores the order timestamp.
         ZonedDateTime timestamp) {
 
-        public Order(String id, List<Product> products) {
-            this(id, products, OrderStatus.PROCESSING, ZonedDateTime.now());
-        }
 }
